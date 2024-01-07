@@ -307,16 +307,18 @@ def assemble_data(full_df, num_col_metadata, num_data_rows, num_row_metadata, nu
             try:
                 data[col].astype(data_type)
             except:
-                for row_idx, val in enumerate(data[col]):
-                    try:
-                        data_type(val)
-                    except:
-                        bad_row_label = data[col].index[row_idx]
-                        err_msg = ("First instance of value that could not be converted: " +
-                                   "data.loc['{}', '{}'] = '{}'\nAdd to nan_values if you wish " +
-                                   "for this value to be considered NaN.").format(bad_row_label, col, val)
-                        logger.error(err_msg)
-                        raise Exception(err_msg)
+                err_msg = ("Column '{}' could not be converted to float" ).format(col)
+                logger.error(err_msg)
+                # for row_idx, val in enumerate(data[col]):
+                #     try:
+                #         data_type(val)
+                #     except:
+                #         bad_row_label = data[col].index[row_idx]
+                #         err_msg = ("First instance of value that could not be converted: " +
+                #                    "data.loc['{}', '{}'] = '{}'\nAdd to nan_values if you wish " +
+                #                    "for this value to be considered NaN.").format(bad_row_label, col, val)
+                #         logger.error(err_msg)
+                #         raise Exception(err_msg)
 
     # Rename the index name and columns name
     data.index.name = row_index_name
